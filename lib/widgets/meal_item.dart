@@ -9,50 +9,57 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
+  final Function removeItem;
 
-String get complexityText {
-  switch (complexity) {
-    case Complexity.Simple:
-      return 'Simple';
-      break;
-    case Complexity.Challenging:
-      return 'Challenging';
-      break;
-    case Complexity.Hard:
-      return 'Hard';
-      break;
-    default: 
-      return 'Unknown';
+  String get complexityText {
+    switch (complexity) {
+      case Complexity.Simple:
+        return 'Simple';
+        break;
+      case Complexity.Challenging:
+        return 'Challenging';
+        break;
+      case Complexity.Hard:
+        return 'Hard';
+        break;
+      default:
+        return 'Unknown';
+    }
   }
-}
 
-String get affordabilityText {
-  switch (affordability) {
-    case Affordability.Affordable:
-      return 'Affordable';
-      break;
-    case Affordability.Pricey:
-      return 'Pricey';
-      break;
-    case Affordability.Luxurious:
-      return 'Luxurious';
-      break;
-    default: 
-      return 'Unknown';
+  String get affordabilityText {
+    switch (affordability) {
+      case Affordability.Affordable:
+        return 'Affordable';
+        break;
+      case Affordability.Pricey:
+        return 'Pricey';
+        break;
+      case Affordability.Luxurious:
+        return 'Luxurious';
+        break;
+      default:
+        return 'Unknown';
+    }
   }
-}
 
-  MealItem({
-      @required this.id,
+  MealItem(
+      {@required this.id,
       @required this.title,
       @required this.imageURL,
       @required this.duration,
       @required this.complexity,
-      @required this.affordability}
-  );
+      @required this.affordability,
+      @required this.removeItem});
 
   void selectMeal(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(MealDetailScreen.routeName, arguments: id);
+    Navigator.of(ctx)
+        .pushNamed(MealDetailScreen.routeName, arguments: id)
+        .then((id) => {
+          if (id != null) {
+            removeItem(id)
+          }
+        });
   }
 
   @override
